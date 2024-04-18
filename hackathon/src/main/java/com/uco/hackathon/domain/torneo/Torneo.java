@@ -34,6 +34,16 @@ public class Torneo {
     @Column(name = "descripcion")
     private String descripcion;
 
+
+
+    @Column(name = "eliminado")
+    private boolean eliminado;
+
+
+
+    @Column(name = "fixture")
+    private boolean fixture;
+
     @ManyToMany
     @JoinTable(
             name = "equipo_torneo",
@@ -90,6 +100,22 @@ public class Torneo {
 
     public List<Equipo> getEquipos() {
         return equipo;
+    }
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
+    public boolean isFixture() {
+        return fixture;
+    }
+
+    public void setFixture(boolean fixture) {
+        this.fixture = fixture;
     }
 
 }

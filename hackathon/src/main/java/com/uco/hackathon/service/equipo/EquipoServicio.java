@@ -58,4 +58,19 @@ public class EquipoServicio {
         return (List<Equipo>) equipoRepositorio.findAll();
     }
 
+    public Equipo guardarEquipo(Equipo equipo) {
+        return equipoRepositorio.save(equipo);
+    }
+
+    public Equipo buscarPorNombre(String nombreEquipo) {
+        return equipoRepositorio.findByNombre(nombreEquipo)
+                .orElseThrow(() -> new NoSuchElementException("No se encontró un equipo con el nombre proporcionado"));
+    }
+
+    public void eliminarEquipo(String nombreEquipo) {
+        Equipo equipo = buscarPorNombre(nombreEquipo);
+        equipo.setEliminado(true);
+        equipoRepositorio.save(equipo);
+    }
+
 }

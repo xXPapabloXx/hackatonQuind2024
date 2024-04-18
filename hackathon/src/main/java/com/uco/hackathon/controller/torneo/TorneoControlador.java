@@ -66,4 +66,10 @@ public class TorneoControlador {
         response.addMessage("Torneo actualizado correctamente");
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{nombreTorneo}")
+    public ResponseEntity<String> eliminarTorneo(@PathVariable String nombreTorneo) {
+        torneoServicio.eliminarTorneo(nombreTorneo);
+        return ResponseEntity.ok("Torneo eliminado correctamente");
+    }
 }

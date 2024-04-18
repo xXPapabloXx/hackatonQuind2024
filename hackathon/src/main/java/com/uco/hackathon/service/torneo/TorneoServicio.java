@@ -1,5 +1,6 @@
 package com.uco.hackathon.service.torneo;
 
+import com.uco.hackathon.domain.equipo.Equipo;
 import com.uco.hackathon.domain.torneo.Torneo;
 import com.uco.hackathon.repository.torneo.TorneoRepositorio;
 import com.uco.hackathon.util.CustomException;
@@ -37,6 +38,17 @@ public class TorneoServicio {
         }
 
         return torneoRepositorio.save(torneo);
+    }
+
+    public Torneo buscarPorNombre(String nombreTorneo) {
+        return torneoRepositorio.findByNombre(nombreTorneo)
+                .orElseThrow(() -> new NoSuchElementException("No se encontró un equipo con el nombre proporcionado"));
+    }
+
+    public void eliminarTorneo(String nombreTorneo) {
+        Torneo torneo = buscarPorNombre(nombreTorneo);
+        torneo.setEliminado(true);
+        torneoRepositorio.save(torneo);
     }
 
 }

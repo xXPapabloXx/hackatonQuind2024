@@ -30,11 +30,18 @@ public class Equipo {
     private String numeroJugadores;
 
 
+
+    @Column(name = "eliminado")
+    private boolean eliminado;
+
+    @Column(name = "fixture")
+    private boolean fixture;
+
+
     public Equipo(){
         this.nombre = "";
         this.numeroJugadores = "";
         this.descripcion = "";
-
     }
     public Equipo(String nombre, String numeroJugadores, String descripcion){
         this.nombre = nombre;
@@ -64,6 +71,23 @@ public class Equipo {
 
     public void setNumeroJugadores(String numeroJugadores) {
         this.numeroJugadores = numeroJugadores;
+    }
+
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
+    public boolean isFixture() {
+        return fixture;
+    }
+
+    public void setFixture(boolean fixture) {
+        this.fixture = fixture;
     }
 
 

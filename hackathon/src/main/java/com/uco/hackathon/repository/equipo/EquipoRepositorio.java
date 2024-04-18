@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface EquipoRepositorio extends CrudRepository<Equipo, String> {
     Optional<Equipo> findByNombre(String nombre);
+    Optional<Equipo> findByNombreAndEliminadoFalse(String nombre);
 }
