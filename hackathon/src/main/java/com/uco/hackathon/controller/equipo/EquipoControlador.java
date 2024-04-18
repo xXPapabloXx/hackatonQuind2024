@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.uco.hackathon.domain.response.Response;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RestController
@@ -34,22 +37,18 @@ public class EquipoControlador {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("add")
-    public ResponseEntity<Response<Equipo>> createBudget(@RequestBody Equipo equipo) {
+    @PostMapping("add/{nombreTorneo}")
+    public ResponseEntity<Response<Equipo>> agregarEquipo(@PathVariable String nombreTorneo, @Valid @RequestBody Equipo equipo) {
         Response<Equipo> response = new Response<>();
-        ResponseEntity<Response<Equipo>> responseEntity;
-        HttpStatus status = HttpStatus.OK;
         try {
-
-            Equipo respuestaEquipo = EquipoServicio.save(equipo);
-            response.setData(respuestaEquipo);
-            response.addMessage(SUCCESS);
-        } catch (Exception e) {
-            response.addMessage(e.getMessage());
-            status = HttpStatus.BAD_REQUEST;
+            Equipo nuevoEquipo = equipoServicio.agregarEquipo(nombreTorneo, equipo);
+            response.setData(nuevoEquipo);
+            response.addMessage("Equipo añadido correctamente");
+            return ResponseEntity.ok(response);
+        } catch (NoSuchElementException e) {
+            response.addMessage("No se encontró un torneo con el nombre proporcionado");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-        responseEntity = new ResponseEntity<>(response, status);
-        return responseEntity;
     }
 
 }

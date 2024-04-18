@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="torneo")
@@ -13,25 +15,32 @@ public class Torneo {
     @Id
     @Column(name = "nombre")
     @NotNull(message = "El nombre es obligatorio")
+    @NotBlank
     private String nombre;
 
 
     @Column(name = "ubicacion")
     @NotNull(message = "La ubicación es obligatoria")
+    @NotBlank
     private String ubicacion;
 
 
     @Column(name = "deporte")
     @NotNull(message = "El deporte es obligatorio")
+    @NotBlank
     private String deporte;
 
 
     @Column(name = "descripcion")
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "equipo_nombre")
-    private Equipo equipo;
+    @ManyToMany
+    @JoinTable(
+            name = "equipo_torneo",
+            joinColumns = @JoinColumn(name = "torneo_nombre"),
+            inverseJoinColumns = @JoinColumn(name = "equipo_nombre")
+    )
+    private List<Equipo> equipo = new ArrayList<>();
 
    public Torneo(){
         this.nombre = "";
@@ -77,6 +86,10 @@ public class Torneo {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<Equipo> getEquipos() {
+        return equipo;
     }
 
 }

@@ -1,8 +1,10 @@
 package com.uco.hackathon.domain.equipo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.uco.hackathon.domain.torneo.Torneo;
 import jakarta.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 import java.util.ArrayList;
@@ -16,24 +18,23 @@ public class Equipo {
 
     @Id
     @Column(name="nombre")
-    @NotBlank(message = "El nombre es obligatorio")
+    @NotNull(message = "El nombre es obligatorio")
+    @NotBlank
     private String nombre;
 
     @Column(name="descripcion")
-    @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
     @Column(name="numerojugadores")
-    @NotBlank(message = "El número de jugadores es obligatorio")
+    @NotNull(message = "El número de jugadores es obligatorio")
+    @NotBlank
     private String numeroJugadores;
 
-    @OneToMany(mappedBy = "equipo")
-    private List<Torneo> torneo;
 
     public Equipo(){
         this.nombre = "";
         this.numeroJugadores = "";
         this.descripcion = "";
-        this.torneo = new ArrayList<>();
+
     }
     public Equipo(String nombre, String numeroJugadores, String descripcion){
         this.nombre = nombre;
@@ -66,11 +67,5 @@ public class Equipo {
     }
 
 
-    public List<Torneo> getTorneo() {
-        return torneo;
-    }
 
-    public void setTorneo(List<Torneo> torneo) {
-        this.torneo = torneo;
-    }
 }
